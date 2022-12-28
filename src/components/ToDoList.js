@@ -3,15 +3,16 @@ import ToDo from "./ToDo";
 const ToDoList = (props) => {
     return (
         <ul>
-            <span>To do</span>
-            {props.toDoList.filter(a => a.completed === false).slice(0,5).sort((a,b) => (a.title > b.title) ? 1: -1).map((toDo) => (
+            <button onClick={props.onAdd} style={{ width: 120, height: 40 }}>Add To Do</button>
+            <h3>To do</h3>
+            {props.toDoList.filter(a => a.completed === false).sort((a, b) => (a.title > b.title) ? 1 : -1).map((toDo) => (
                 <ToDo key={toDo.id}
                     title={toDo.title}
                     completed={toDo.completed}
                 />
             ))}
-            <span>Done</span>
-            {props.toDoList.filter(a => a.completed === true).slice(0,5).sort((a,b) => (a.title > b.title) ? 1: -1).map((toDo) => (
+            <h3>Done</h3>
+            {props.toDoList.filter(a => a.completed === true).sort((a, b) => (a.title > b.title) ? 1 : -1).map((toDo) => (
                 <ToDo key={toDo.id}
                     title={toDo.title}
                     completed={toDo.completed}
