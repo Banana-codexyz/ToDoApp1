@@ -1,27 +1,21 @@
 import { useState } from "react";
 
-const AddToDo = (props) => {
+const UpdateToDo = (props) => {
 
-    const [id, setId] = useState('');
-    const [userId, setUserId] = useState('');
-    const [title, setTitle] = useState('');
-    const [completed, setCompleted] = useState('false');
+    const [id, setId] = useState(props.updateToDo.id);
+    const [userId, setUserId] = useState(props.updateToDo.userId);
+    const [title, setTitle] = useState(props.updateToDo.title);
+    const [completed, setCompleted] = useState(props.updateToDo.completed);
 
-    const idValid = id !== '';
     const userIdValid = userId !== '';
     const titleValid = title !== '';
     
 
     let formIsValid = false;
 
-    if(idValid && userIdValid && titleValid){
+    if(userIdValid && titleValid){
         formIsValid = true;
     }
-
-
-    const idInputChangeHandler = (event) => {
-        setId(event.target.value);
-    };
 
     const userIdInputChangeHandler = (event) => {
         setUserId(event.target.value);
@@ -44,10 +38,12 @@ const AddToDo = (props) => {
 
     };
     return (
+        <div>
+        <h2 style={{ color: 'blue' }}>Update</h2>
         <form onSubmit={formSubmitHandler}>
             <div>
                 <span>Id</span>
-                <input type="number" onChange={idInputChangeHandler} />
+                <input type="number"/>
             </div>
             <div>
                 <span>UserId</span>
@@ -64,9 +60,10 @@ const AddToDo = (props) => {
                     <option value={true}>True</option>
                 </select>
             </div>
-            <button disabled={!formIsValid} type="submit">Add to do</button>
+            <button disabled={!formIsValid} type="submit">Update</button>
         </form>
+        </div>
     )
 }
 
-export default AddToDo;
+export default UpdateToDo;

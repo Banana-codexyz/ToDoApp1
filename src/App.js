@@ -10,13 +10,36 @@ function App() {
 
   const [isToDoList, setIsToDoList] = useState(true);
 
-  const addToDoHandler = (id, userId, title, completed) => {
+  
+
+  const addToDoHandler = (toDo) => {
     setToDoList((prev) => {
       const updatedToDos = [...prev];
-      updatedToDos.unshift({ id: id, userId: userId, title: title, completed: completed });
+      updatedToDos.unshift(toDo);
       return updatedToDos;
     });
+    setIsToDoList(true);
   };
+
+  const deleteToDoHandler = (id) => {
+    setToDoList((prev) => {
+      const updatedToDos = prev.filter((toDo) => toDo.id !==  id);
+      return updatedToDos;
+    })
+  }
+
+  const updateToDoHandler = (updateToDo) => {
+    setToDoList((prev) => {
+      toDoList = prev.map(toDo => {
+        if(toDo.id === updateToDo.id){
+          toDo.userId = updateToDo.userId;
+          toDo.title = updateToDo.useId;
+          toDo.completed = updateToDo.completed;
+        }
+      })
+      return toDoList;
+    })
+  }
 
 
   const switchPageAdd = () => {
@@ -29,7 +52,7 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        const toDoList = data.slice(0, 10).map((toDo) => {
+        const toDoList = data.slice(0, 10).sort((a, b) => (a.title > b.title) ? 1 : -1).map((toDo) => {
           return {
             useId: toDo.completed,
             id: toDo.id,
@@ -45,8 +68,8 @@ function App() {
 
   return (
     <main>
-      {isToDoList && <ToDoList onAdd={switchPageAdd} toDoList={toDoList} />}
-      {!isToDoList && <AddToDo />}
+      {isToDoList && <ToDoList onUpdateToDo={updateToDoHandler} onDeleteToDo={deleteToDoHandler} onAdd={switchPageAdd} toDoList={toDoList} />}
+      {!isToDoList && <AddToDo onAdd={addToDoHandler} />}
     </main>
   );
 }
