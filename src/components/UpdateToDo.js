@@ -32,9 +32,10 @@ const UpdateToDo = (props) => {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
+        console.log(completed);
         const toDo = {id: Number(id), userId: Number(userId), title: title, completed: JSON.parse(completed)};
-        console.log(toDo);
-        props.onAdd(toDo);
+        console.log("toDo",toDo);
+        props.submitUpdate(toDo);
 
     };
     return (
@@ -43,21 +44,21 @@ const UpdateToDo = (props) => {
         <form onSubmit={formSubmitHandler}>
             <div>
                 <span>Id</span>
-                <input type="number"/>
+                <input readOnly value={id} type="number"/>
             </div>
             <div>
                 <span>UserId</span>
-                <input type="number" onChange={userIdInputChangeHandler}/>
+                <input value={userId} type="number" onChange={userIdInputChangeHandler}/>
             </div>
             <div>
                 <span>Title</span>
-                <input type="text" onChange={titleInputChangeHandler}/>
+                <input value={title} type="text" onChange={titleInputChangeHandler}/>
             </div>
             <div>
                 <span>Completed</span>
-                <select onChange={completedInputChangeHandler} >   
-                    <option value={false}>False</option>
-                    <option value={true}>True</option>
+                <select value={completed} onChange={completedInputChangeHandler} >   
+                    <option value={false} selected={completed === false}>False</option>
+                    <option value={true} selected={completed === true}>True</option>
                 </select>
             </div>
             <button disabled={!formIsValid} type="submit">Update</button>

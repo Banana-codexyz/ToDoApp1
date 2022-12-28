@@ -7,9 +7,20 @@ const AddToDo = (props) => {
     const [title, setTitle] = useState('');
     const [completed, setCompleted] = useState('false');
 
-    const idValid = id !== '';
+    const isDupdicateId = (id) => {
+        const a = true;
+        props.toDoList.map(x => {
+            if(x.id === id){
+                a = false;
+            }
+        })
+       return a;
+    };
+
+    let idValid = (id !== '') && isDupdicateId(id);
     const userIdValid = userId !== '';
     const titleValid = title !== '';
+    
     
 
     let formIsValid = false;

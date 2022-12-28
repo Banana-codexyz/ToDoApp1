@@ -6,6 +6,23 @@ const ToDoList = (props) => {
 
     const [showUpdateForm,setShowUpdateForm] = useState(false);
 
+    const [updateToDo,setUpdateToDo] = useState({});
+
+    const showUpdateFormHandle = (id) => {
+        console.log("id:",id);
+        setShowUpdateForm(!showUpdateForm);
+        setUpdateToDo(() => {
+            const toDo = props.toDoList.find(x => x.id === id);
+            console.log(toDo);
+            return toDo;
+        } );
+    }
+
+    const submitUpdate = (toDo) => {
+        setShowUpdateForm(false);
+        props.onUpdateToDo(toDo);
+    }
+
     return (
         <ul>
             <button onClick={props.onAdd} style={{ width: 120, height: 40 }}>Add To Do</button>
@@ -18,7 +35,7 @@ const ToDoList = (props) => {
                     title={toDo.title}
                     completed={toDo.completed}
                     onDelete={props.onDeleteToDo}
-                    
+                    onUpdate={showUpdateFormHandle}
                 />
             ))}
             <h2 style={{ color: 'green' }}>Done</h2>
@@ -28,10 +45,11 @@ const ToDoList = (props) => {
                     title={toDo.title}
                     completed={toDo.completed}
                     onDelete={props.onDeleteToDo}
+                    onUpdate={showUpdateFormHandle}
                 />
             ))}
             
-            {showUpdateForm && <UpdateToDo/>}
+            {showUpdateForm && <UpdateToDo updateToDo={updateToDo} submitUpdate={submitUpdate} />}
         </ul>
     );
 }

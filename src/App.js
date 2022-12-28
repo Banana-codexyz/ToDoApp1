@@ -30,12 +30,13 @@ function App() {
 
   const updateToDoHandler = (updateToDo) => {
     setToDoList((prev) => {
-      toDoList = prev.map(toDo => {
+      const toDoList = prev.map((toDo) => {
         if(toDo.id === updateToDo.id){
           toDo.userId = updateToDo.userId;
-          toDo.title = updateToDo.useId;
+          toDo.title = updateToDo.title;
           toDo.completed = updateToDo.completed;
         }
+        return toDo;
       })
       return toDoList;
     })
@@ -54,7 +55,7 @@ function App() {
       .then((data) => {
         const toDoList = data.slice(0, 10).sort((a, b) => (a.title > b.title) ? 1 : -1).map((toDo) => {
           return {
-            useId: toDo.completed,
+            userId: toDo.userId,
             id: toDo.id,
             title: toDo.title,
             completed: toDo.completed
@@ -69,7 +70,7 @@ function App() {
   return (
     <main>
       {isToDoList && <ToDoList onUpdateToDo={updateToDoHandler} onDeleteToDo={deleteToDoHandler} onAdd={switchPageAdd} toDoList={toDoList} />}
-      {!isToDoList && <AddToDo onAdd={addToDoHandler} />}
+      {!isToDoList && <AddToDo onAdd={addToDoHandler} toDoList={toDoList}/>}
     </main>
   );
 }
